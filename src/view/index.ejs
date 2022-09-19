@@ -1,0 +1,44 @@
+<%- include('template.ejs') -%>
+<div class="container mt-3">
+    <table id="table" style="width: 100%;" class="table-hover table-bordered">
+        <thead>
+            <tr>
+                <th class="p-3">Id</th>
+                <th class="p-3">Item Name</th>
+                <th class="p-3">Cost</th>
+                <th class="p-3">Add To Cart</th>
+                <th class="p-3">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="p-3">Id</th>
+                <th class="p-3">Item Name</th>
+                <th class="p-3">Cost</th>
+                <th class="p-3">Add To Cart</th>
+                <th class="p-3">Edit</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+</body>
+<script src="datatables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="datatables/DataTables-1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="datatables/Responsive-2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="datatables/Responsive-2.3.0/js/responsive.bootstrap5.js"></script>
+<script src="datatables/Buttons-2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.bootstrap5.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.html5.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.print.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.colVis.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable( {
+            "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>'
+        });
+    });
+</script>
+</html>
