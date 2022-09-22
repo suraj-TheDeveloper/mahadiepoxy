@@ -12,24 +12,12 @@ const product = new mongo.Schema({
     price: {
         type: String,
         required: true
-    },
-    unit: {
-        type: String,
-        required: true
-    },
-    stock: {
-        type: Number,
-        required: true
-    },
-    gst: {
-        type: String,
-        required: true
     }
 }, {
-    collection: 'mahadi_product_table'
+    collection: 'mahadi_cart_table'
 });
 
-const products = mongo.model("mahadi_product_table", product);
+const products = mongo.model("mahadi_cart_table", product);
 
 module.exports = products;
 

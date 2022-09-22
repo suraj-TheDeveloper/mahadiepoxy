@@ -7,7 +7,8 @@
                 <th class="p-3">Item Name</th>
                 <th class="p-3">Cost</th>
                 <th class="p-3">Stock</th>
-                <th class="p-3">Add To Cart</th>
+                <th class="p-3">GST</th>
+                <th class="p-3">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +18,8 @@
                 <td class="p-3"><%= data[i].name %></td>
                 <td class="p-3"><%= data[i].price %> <i class="fa fa-rupee"></i></td>
                 <td class="p-3"><%= data[i].stock %> <%= data[i].unit %></td>
-                <td class="p-3"><button class="btn btn-info">Add to cart</button></td>
+                <td class="p-3"><%= data[i].gst %> %</td>
+                <td class="p-3"><button class="btn btn-info">Edit</button></td>
             </tr>
             <% } %>
         </tbody>
@@ -27,7 +29,8 @@
                 <th class="p-3">Item Name</th>
                 <th class="p-3">Cost</th>
                 <th class="p-3">Stock</th>
-                <th class="p-3">Add To Cart</th>
+                <th class="p-3">GST</th>
+                <th class="p-3">Edit</th>
             </tr>
         </tfoot>
     </table>
