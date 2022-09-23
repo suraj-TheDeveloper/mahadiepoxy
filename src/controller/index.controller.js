@@ -22,6 +22,10 @@ exports.cart = (req, res) => {
     res.render("cart.ejs");
 }
 
+exports.settings = (req, res) => {
+    res.render("settings.ejs");
+}
+
 //backend
 exports.addData = async (req, res) => {
     // console.log(req.body);

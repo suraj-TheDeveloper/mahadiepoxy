@@ -1,0 +1,39 @@
+<%- include('template.ejs') -%>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="rounded-3 p-5 mt-5 mb-5" style="background-color:#F3F3F3;">
+                <h1 class="text-center"></h1>
+                <form action="/addservice", method="post">
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" class="form-control" name="pname" id="pname" placeholder="Enter Product name...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-control" name="address" id="address" placeholder="Enter Address..." rows="5"></textarea>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Phone</label>
+                        <input type="number" class="form-control" name="phone" id="phone" placeholder="Enter Phone number...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">GST</label>
+                        <input type="text" class="form-control" name="gst" id="gst" placeholder="Enter Gst number...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">State GST Code</label>
+                        <input type="text" class="form-control" name="gstcode" id="gstcode" placeholder="Enter state Gst code...">
+                    </div>
+                    <button class="btn btn-info">Save</button>
+                </form>
+            </div>
+        </div>  
+    </div>
+</div>
+</body>
+</html>
