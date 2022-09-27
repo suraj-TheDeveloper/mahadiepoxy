@@ -1,17 +1,15 @@
+const { default: mongoose } = require("mongoose");
 const mongo = require("../db.config");
 
 const product = new mongo.Schema({
     customerName: {
         type: String,
-        required: true
     },
     customerAddress: {
         type: String,
-        required: true
     },
     contactNo: {
         type: String,
-        required: true
     },
     gstin: {
         type: String
@@ -22,27 +20,21 @@ const product = new mongo.Schema({
     product: [{
         productId: {
             type: Number,
-            required: true
         },
         name: {
             type: String,
-            required: true
         },
         price: {
-            type: String,
-            required: true
+            type: mongoose.Types.Decimal128,
         },
         unit: {
             type: String,
-            required: true
-        },
-        stock: {
-            type: Number,
-            required: true
         },
         gst: {
-            type: String,
-            required: true
+            type: Number,
+        },
+        quantity: {
+            type: Number,
         }
     }],
 }, {

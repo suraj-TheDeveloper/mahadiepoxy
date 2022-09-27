@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const mongo = require("../db.config");
 
 const product = new mongo.Schema({
@@ -10,7 +11,7 @@ const product = new mongo.Schema({
         required: true
     },
     price: {
-        type: String,
+        type: mongoose.Types.Decimal128,
         required: true
     },
     unit: {
@@ -22,7 +23,7 @@ const product = new mongo.Schema({
         required: true
     },
     gst: {
-        type: String,
+        type: Number,
         required: true
     }
 }, {
@@ -32,4 +33,3 @@ const product = new mongo.Schema({
 const products = mongo.model("mahadi_product_table", product);
 
 module.exports = products;
-

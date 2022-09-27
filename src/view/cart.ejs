@@ -1,4 +1,92 @@
 <%- include('template.ejs') -%>
-<div class="container mt-3">
-    
+<div class="container mt-3 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <form action="/addtocart/customer" method="post">
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Client Name:</label>
+                    <input type="text" name="cname" id="cname" class="form-control" placeholder="Enter Client Name...">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Client Address:</label>
+                    <textarea class="form-control" name="address" id="address" rows="4" placeholder="Enter Address..."></textarea>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Client Phone:</label>
+                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter phone...">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Client Gst:</label>
+                    <input type="text" name="gstin" id="gstin" class="form-control" placeholder="Enter Gst Number...">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Client Gst Code:</label>
+                    <input type="text" name="gstcode" id="gstcode" class="form-control" placeholder="Enter Gst State Code...">
+                </div>
+                <input type="submit" class="btn btn-info" value="Add Details">
+            </form>
+        </div>
+    </div>
+    <table id="table" style="width: 100%; border-color: #ced4da;" class="table-hover table-bordered">
+        <thead>
+            <tr>
+                <th class="p-3">Item Id</th>
+                <th class="p-3">Item Name</th>
+                <th class="p-3">Cost</th>
+                <th class="p-3">Unit</th>
+                <th class="p-3">Gst Amount</th>
+                <th class="p-3">quantity</th>
+                <th class="p-3">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% result.forEach(data => { %>
+                <tr>
+                    <td class="p-3"><%= data.productId %></td>
+                    <td class="p-3"><%= data.name %></td>
+                    <td class="p-3"><%= data.price %></td>
+                    <td class="p-3"><%= data.unit %></td>
+                    <td class="p-3"><%= data.gstcost %> (<%= data.gst %> %)</td>
+                    <td class="p-3"><%= data.quantity %></td>
+                    <td class="p-3"><%= data.total %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="p-3"></th>
+                <th class="p-3">Total</th>
+                <th class="p-3"></th>
+                <th class="p-3"></th>
+                <th class="p-3"><%= gst %></th>
+                <th class="p-3"></th>
+                <th class="p-3"><%= gross %></th>
+            </tr>
+        </tfoot>
+    </table>
 </div>
+</body>
+<script src="datatables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="datatables/DataTables-1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="datatables/Responsive-2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="datatables/Responsive-2.3.0/js/responsive.bootstrap5.js"></script>
+<script src="datatables/Buttons-2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.bootstrap5.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.html5.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.print.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.colVis.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable( {
+            // "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+            searching: false,
+            paging: false,
+            info: false
+        });
+    });
+    let price = document.getElementById("price").value;
+    let quantity = document.getElementById("quantity").value;
+    let total = price * quantity;
+    document.getElementById("total").innerHTML = total;
+</script>
+</html>

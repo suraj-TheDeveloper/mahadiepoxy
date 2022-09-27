@@ -6,19 +6,30 @@
                 <th class="p-3">Id</th>
                 <th class="p-3">Item Name</th>
                 <th class="p-3">Cost</th>
+                <th class="p-3">Quantity</th>
                 <th class="p-3">Stock</th>
                 <th class="p-3">Add To Cart</th>
             </tr>
         </thead>
         <tbody>
             <% for (i = 0; i < data.length; i++){ %>
-            <tr>
-                <td class="p-3"><%= data[i].productId %></td>
-                <td class="p-3"><%= data[i].name %></td>
-                <td class="p-3"><%= data[i].price %> <i class="fa fa-rupee"></i></td>
-                <td class="p-3"><%= data[i].stock %> <%= data[i].unit %></td>
-                <td class="p-3"><button class="btn btn-info">Add to cart</button></td>
-            </tr>
+                <tr>
+                    <form action="/addtocart" method="post">
+                        <input type="hidden" name="productid" value="<%= data[i].productId %>">
+                        <input type="hidden" name="name" value="<%= data[i].name %>">
+                        <input type="hidden" name="price" value="<%= data[i].price %>">
+                        <input type="hidden" name="stock" value="<%= data[i].stock %>">
+                        <input type="hidden" name="unit" value="<%= data[i].unit %>">
+                        <input type="hidden" name="id" value="<%= data[i]._id %>">
+                        <input type="hidden" name="gst" value="<%= data[i].gst %>">
+                        <td class="p-3"><%= data[i].productId %></td>
+                        <td class="p-3"><%= data[i].name %></td>
+                        <td class="p-3"><%= data[i].price %> <i class="fa fa-rupee"></i></td>
+                        <td class="p-3"><input type="number" name="quantity" id="quantity" class="form-control" placeholder="Enter quantity..."></td>
+                        <td class="p-3"><%= data[i].stock %> <%= data[i].unit %></td>
+                        <td class="p-3"><input type="submit" class="btn btn-info" value="Add To Cart"></td>
+                    </form>
+                </tr>
             <% } %>
         </tbody>
         <tfoot>
@@ -26,6 +37,7 @@
                 <th class="p-3">Id</th>
                 <th class="p-3">Item Name</th>
                 <th class="p-3">Cost</th>
+                <th class="p-3">Quantity</th>
                 <th class="p-3">Stock</th>
                 <th class="p-3">Add To Cart</th>
             </tr>
