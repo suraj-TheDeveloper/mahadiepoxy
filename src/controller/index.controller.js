@@ -29,7 +29,9 @@ exports.cart = async (req, res) => {
     let grosstotal = [];
     let total = [];
     cart.map(item => {
+        // console.log(item);
         item.product.map(items => {
+            // console.log(items);
             let itemcost = items.price * items.quantity;
             let gstpercent = parseFloat(items.gst) / 100;
             let gstamount = gstpercent * itemcost;
@@ -41,10 +43,11 @@ exports.cart = async (req, res) => {
                 name: items.name,
                 price: items.price,
                 unit: items.unit,
-                gst: items.gst,
+                hsn: items.hsn,
                 quantity: items.quantity,
-                total: grossamount.toFixed(2),
-                gstcost: gstamount.toFixed(2)
+                total: itemcost.toFixed(2),
+                // total: grossamount.toFixed(2),
+                // gstcost: gstamount.toFixed(2)
             });
         });
     })      
@@ -67,8 +70,13 @@ exports.settings = (req, res) => {
     });
 }
 
-exports.invoice = (req, res) => {
-    res.render("billing.ejs");
+exports.invoice = async (req, res) => {
+    const itemnumber = await ProductModel.findOne().sort({_id: -1}).exec();
+    // console.log(itemnumber);
+    const result = await profileModel.findOne().exec();
+    const result1 = await cartModel.findOne().exec();
+    // console.log(result1);
+    res.render("billing.ejs", {data: result, data1: result1});
 }
 
 //backend
@@ -86,7 +94,7 @@ exports.addData = async (req, res) => {
             price: data.price,
             unit: data.unit,
             stock: data.stock,
-            gst: data.gst
+            hsn: data.hsn
         });
         product.save((err, result) => {
             if(err) throw err;
@@ -98,12 +106,15 @@ exports.addData = async (req, res) => {
 exports.saveSettings = (req, res) => {
     const data = req.body;
     profileModel.findByIdAndUpdate(data.id, {
-        companyName: data.companyname,
+        clientName: data.companyname,
         address: data.address,
         phone: data.phone,
         email: data.email,
         gstin: data.gstin,
-        stateGstCode: data.gstcode
+        stateGstCode: data.gstcode,
+        cgst: data.cgst,
+        sgst: data.sgst,
+        igst: data.isgt
     }, (err, result) => {
         if(err) throw err;
         res.redirect("/");
@@ -113,6 +124,7 @@ exports.saveSettings = (req, res) => {
 exports.customerDetails = async (req, res) => {
     let id = {};
     const data = req.body;
+    console.log(data);
     const cartdata = await cartModel.find().sort({_id: -1}).exec();
     for (i = 0; i < cartdata.length; i++) {
         id = {
@@ -124,7 +136,11 @@ exports.customerDetails = async (req, res) => {
         customerAddress: data.address,
         contactNo: data.phone,
         gstin: data.gstin,
-        gstStateCode: data.gstcode
+        gstStateCode: data.gstcode,
+        city: data.city,
+        state: data.stt,
+        pin: data.pin,
+        gstin: data.gstin
     }, (err, result) => {
         if(err) throw err;
         res.redirect("/invoice");
@@ -143,7 +159,7 @@ exports.addToCart = async (req, res) => {
             price: record.price,
             unit: record.unit,
             quantity: record.quantity,
-            gst: record.gst
+            hsn: record.hsn
         }
         // console.log(data);
         const addcart = new cartModel({
@@ -156,7 +172,10 @@ exports.addToCart = async (req, res) => {
         });
         addcart.save((err, result) => {
             if(err) throw err;
-            res.redirect("/");
+            ProductModel.findOneAndUpdate({productId: record.productid}, {$inc: { stock: -record.quantity }}, (err, result) => {
+                if(err) throw err;
+                res.redirect("/");
+            });
         })
     } else {
         let id = {};
@@ -172,11 +191,14 @@ exports.addToCart = async (req, res) => {
             price: record.price,
             unit: record.unit,
             quantity: record.quantity,
-            gst: record.gst
+            hsn: record.hsn
         }
         cartModel.findByIdAndUpdate(id.cartId, {$push: { product: data }}, (err, result) => {
             if(err) throw err;
-            res.redirect("/");
+            ProductModel.findOneAndUpdate({productId: record.productid}, {$inc: { stock: -record.quantity }}, (err, result) => {
+                if(err) throw err;
+                res.redirect("/");
+            });
         });
     }
 }

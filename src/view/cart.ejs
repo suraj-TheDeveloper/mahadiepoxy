@@ -4,24 +4,47 @@
         <div class="col-md-5">
             <form action="/addtocart/customer" method="post">
                 <div class="mb-3 mt-3">
-                    <label class="form-label">Client Name:</label>
+                    <label class="form-label">Name:</label>
                     <input type="text" name="cname" id="cname" class="form-control" placeholder="Enter Client Name...">
+                    <% result.forEach(data => { %>
+                        <input type="hidden" name="productid" id="productid" value="<%= data.productId %>">
+                        <input type="hidden" name="name" id="name" value="<%= data.name %>">
+                        <input type="hidden" name="price" id="price" value="<%= data.price %>">
+                        <input type="hidden" name="unit" id="unit" value="<%= data.unit %>">
+                        <input type="hidden" name="hsn" id="hsn" value="<%= data.hsn %>">
+                        <input type="hidden" name="quantity" id="quantity" value="<%= data.quantity %>">
+                    <% }) %>
                 </div>
                 <div class="mb-3 mt-3">
-                    <label class="form-label">Client Address:</label>
+                    <label class="form-label">Address:</label>
                     <textarea class="form-control" name="address" id="address" rows="4" placeholder="Enter Address..."></textarea>
                 </div>
                 <div class="mb-3 mt-3">
-                    <label class="form-label">Client Phone:</label>
-                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter phone...">
+                    <label class="form-label">City:</label>
+                    <input type="text" name="city" id="city" class="form-control" placeholder="Enter city...">
                 </div>
                 <div class="mb-3 mt-3">
-                    <label class="form-label">Client Gst:</label>
-                    <input type="text" name="gstin" id="gstin" class="form-control" placeholder="Enter Gst Number...">
+                    <label class="form-label">State:</label>
+                    <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
+                    <!-- <select id ="state" class="form-control" required></select> -->
+                    <script language="javascript">print_state("sts");</script>
+                    <!-- <select name="state" id="state" class="form-control">
+                        <option>Select</option>
+                        <option value="tamilnadu">Tamil Nadu</option>
+                        <option value="other">Other State</option>
+                    </select> -->
                 </div>
                 <div class="mb-3 mt-3">
-                    <label class="form-label">Client Gst Code:</label>
-                    <input type="text" name="gstcode" id="gstcode" class="form-control" placeholder="Enter Gst State Code...">
+                    <label class="form-label">Pin Code:</label>
+                    <input type="text" name="pin" id="pin" class="form-control" placeholder="Enter Pin Code...">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Phone:</label>
+                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter Phone number...">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">GSTIN (Optional):</label>
+                    <input type="text" name="gstin" id="gstin" class="form-control" placeholder="Enter GST number...">
                 </div>
                 <input type="submit" class="btn btn-info" value="Add Details">
             </form>
@@ -34,7 +57,7 @@
                 <th class="p-3">Item Name</th>
                 <th class="p-3">Cost</th>
                 <th class="p-3">Unit</th>
-                <th class="p-3">Gst Amount</th>
+                <th class="p-3">HSN / SAC</th>
                 <th class="p-3">quantity</th>
                 <th class="p-3">Total</th>
             </tr>
@@ -46,22 +69,14 @@
                     <td class="p-3"><%= data.name %></td>
                     <td class="p-3"><%= data.price %></td>
                     <td class="p-3"><%= data.unit %></td>
-                    <td class="p-3"><%= data.gstcost %> (<%= data.gst %> %)</td>
+                    <td class="p-3"><%= data.hsn %></td>
                     <td class="p-3"><%= data.quantity %></td>
                     <td class="p-3"><%= data.total %></td>
                 </tr>
             <% }) %>
         </tbody>
         <tfoot>
-            <tr>
-                <th class="p-3"></th>
-                <th class="p-3">Total</th>
-                <th class="p-3"></th>
-                <th class="p-3"></th>
-                <th class="p-3"><%= gst %></th>
-                <th class="p-3"></th>
-                <th class="p-3"><%= gross %></th>
-            </tr>
+            
         </tfoot>
     </table>
 </div>
@@ -83,10 +98,9 @@
             paging: false,
             info: false
         });
+        $("#state").click(function(data) {
+            console.log(data);
+        })
     });
-    let price = document.getElementById("price").value;
-    let quantity = document.getElementById("quantity").value;
-    let total = price * quantity;
-    document.getElementById("total").innerHTML = total;
 </script>
 </html>

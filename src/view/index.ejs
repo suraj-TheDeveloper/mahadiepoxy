@@ -21,7 +21,7 @@
                         <input type="hidden" name="stock" value="<%= data[i].stock %>">
                         <input type="hidden" name="unit" value="<%= data[i].unit %>">
                         <input type="hidden" name="id" value="<%= data[i]._id %>">
-                        <input type="hidden" name="gst" value="<%= data[i].gst %>">
+                        <input type="hidden" name="hsn" value="<%= data[i].hsn %>">
                         <td class="p-3"><%= data[i].productId %></td>
                         <td class="p-3"><%= data[i].name %></td>
                         <td class="p-3"><%= data[i].price %> <i class="fa fa-rupee"></i></td>
@@ -56,9 +56,7 @@
 <script src="datatables/Buttons-2.2.3/js/buttons.colVis.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#table').DataTable( {
-            "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>'
-        });
-    });
+        $('#table').DataTable();
+    })
 </script>
 </html>

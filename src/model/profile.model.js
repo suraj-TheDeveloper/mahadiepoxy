@@ -1,7 +1,7 @@
 const mongo = require("../db.config");
 
 const product = new mongo.Schema({
-    companyName: {
+    clientName: {
         type: String,
         required: true
     },
@@ -22,6 +22,18 @@ const product = new mongo.Schema({
         required: true
     },
     stateGstCode: {
+        type: String,
+        required: true
+    },
+    sgst: {
+        type: String,
+        required: true
+    },
+    cgst: {
+        type: String,
+        required: true
+    },
+    igst: {
         type: String,
         required: true
     }

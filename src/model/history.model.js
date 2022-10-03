@@ -2,6 +2,12 @@ const { default: mongoose } = require("mongoose");
 const mongo = require("../db.config");
 
 const product = new mongo.Schema({
+    invoiceNo: {
+        type: Number
+    },
+    date: {
+        type: Date
+    },
     customerName: {
         type: String,
     },
@@ -44,9 +50,9 @@ const product = new mongo.Schema({
         }
     }],
 }, {
-    collection: 'mahadi_cart_table'
+    collection: 'mahadi_history_table'
 });
 
-const products = mongo.model("mahadi_cart_table", product);
+const products = mongo.model("mahadi_history_table", product);
 
 module.exports = products;

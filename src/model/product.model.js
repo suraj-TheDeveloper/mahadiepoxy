@@ -22,9 +22,8 @@ const product = new mongo.Schema({
         type: Number,
         required: true
     },
-    gst: {
+    hsn: {
         type: Number,
-        required: true
     }
 }, {
     collection: 'mahadi_product_table'
