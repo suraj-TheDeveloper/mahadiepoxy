@@ -2,11 +2,16 @@
 <div class="container mt-3 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
+            <div class="alert-box alert-danger">
+                <% if(message){ %>
+                    <p class="text-danger text-center"><%= message %></p>
+                <% } %>
+            </div>
             <form action="/addtocart/customer" method="post">
                 <div class="mb-3 mt-3">
                     <label class="form-label">Name:</label>
                     <input type="text" name="cname" id="cname" class="form-control" placeholder="Enter Client Name...">
-                    <% result.forEach(data => { %>
+                    <% result.forEach(data => { %>  
                         <input type="hidden" name="productid" id="productid" value="<%= data.productId %>">
                         <input type="hidden" name="name" id="name" value="<%= data.name %>">
                         <input type="hidden" name="price" id="price" value="<%= data.price %>">
@@ -25,7 +30,7 @@
                 </div>
                 <div class="mb-3 mt-3">
                     <label class="form-label">State:</label>
-                    <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
+                    <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control"></select>
                     <!-- <select id ="state" class="form-control" required></select> -->
                     <script language="javascript">print_state("sts");</script>
                     <!-- <select name="state" id="state" class="form-control">

@@ -25,44 +25,206 @@
     </style>
     <body>
         <div class="container mt-3">
-            <div class="d-flex justify-content-between">
-                <h3 style="visibility: hidden;">hi i am names</h3>
-                <h3 class="mt-5">Tax Invoice</h3>
-                <div>
-                    Original for Recipient <input type="checkbox" class="p-3"><br>
-                    Duplicate for Transporter <input type="checkbox" class="p-3"><br>
-                    Triplicate for supplier <input type="checkbox" class="p-3">
-                </div>
-            </div>
-            <div class="border">
-                <div class="row">
-                    <div class="col-md-6 border-end">
-                        <h4 class="m-2"><b><%= data.companyName %></b></h4>
-                        <p class="m-2"><%= data.address %></p>
-                        <p class="m-2">Phone No: <%= data.phone %></p>
-                        <p class="m-2">Email: <%= data.email %></p>
-                        <p class="m-2">GSTIN: <%= data.gstin %></p>
-                        <p class="m-2">State: <%= data.stateGstCode %></p>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6 border-end border-bottom">
-                                <p><b>Invoice No</b>: 06</p>
-                            </div>
-                            <div class="col-md-6 border-bottom">
-                                <p><b>Date</b>: 15/09/2022</p>
-                            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between">
+                        <h3 style="visibility: hidden;">hi i am names</h3>
+                        <h3 class="mt-5">Tax Invoice</h3>
+                        <div>
+                            Original for Recipient <input type="checkbox" class="p-3"><br>
+                            Duplicate for Transporter <input type="checkbox" class="p-3"><br>
+                            Triplicate for supplier <input type="checkbox" class="p-3">
                         </div>
                     </div>
-                    <div class="col-md-6 border-end border-top">
-                        <p class="m-2">Bill To</p>
-                        <p class="m-2"><b><%= data1.customerName %></b></p>
-                        <p class="m-2"><%= data1.customerAddress %></p>
-                        <p class="m-2"><%= data1.city %></p>
-                        <p class="m-2"><%= data1.state %> <%= data1.pin %></p>
-                        <p class="m-2">Phone No: <%= data1.contactNo %></p>
-                        <p class="m-2">GSTIN: <%= data.gstin %></p>
-                        <p class="m-2">State: <%= data.stateGstCode %></p>
+                    <div class="border mb-3">
+                        <div class="row">
+                            <div class="col-md-6 border-end">
+                                <h4 class="m-1"><b><%= data.companyName %></b></h4>
+                                <p class="m-1"><%= data.address %></p>
+                                <p class="m-1">Phone No: <%= data.phone %></p>
+                                <p class="m-1">Email: <%= data.email %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6 border-end border-bottom">
+                                        <p><b>Invoice No</b>: <%= invoice %></p>
+                                    </div>
+                                    <div class="col-md-6 border-bottom">
+                                        <p><b>Date</b>: <%= date %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 border-end border-top">
+                                <p class="m-1">Bill To</p>
+                                <p class="m-1"><b><%= data1.customerName %></b></p>
+                                <p class="m-1"><%= data1.customerAddress %></p>
+                                <p class="m-1"><%= data1.city %></p>
+                                <p class="m-1"><%= data1.state %> <%= data1.pin %></p>
+                                <p class="m-1">Phone No: <%= data1.contactNo %></p>
+                                <p class="m-1">GSTIN: <%= data.gstin %></p>
+                                <p class="m-1">State: <%= data.stateGstCode %></p>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" style="margin-bottom: 0;">
+                            <thead>
+                                <tr>
+                                    <th class="p-3">#</th>
+                                    <th class="p-3">Item Name</th>
+                                    <th class="p-3">HSN / SAC</th>
+                                    <th class="p-3">quantity</th>
+                                    <th class="p-3">Unit</th>
+                                    <th class="p-3">Price / Unit</th>
+                                    <th class="p-3">GST</th>
+                                    <th class="p-3">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data2.forEach(data => { %>
+                                    <tr>
+                                        <td class="p-3"><%= data.productId %></td>
+                                        <td class="p-3"><%= data.name %></td>
+                                        <% if(data1.state == "Tamil Nadu") { %>
+                                            <td class="p-3"><%= data.hsn %></td>
+                                        <% } else { %>
+                                            <td class="p-3"></td>
+                                        <% } %>
+                                        <td class="p-3"><%= data.quantity %></td>
+                                        <td class="p-3"><%= data.unit %></td>
+                                        <td class="p-3"><%= data.price %></td>
+                                        <td class="p-3"><%= data.gstcost %></td>
+                                        <td class="p-3"><%= data.total %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="p-3"></th>
+                                    <th class="p-3">Total</th>
+                                    <th class="p-3"></th>
+                                    <th class="p-3"><%= totals.itemTotal %></th>
+                                    <th class="p-3"></th>
+                                    <th class="p-3"></th>
+                                    <th class="p-3"><%= totals.overallGst %></th>
+                                    <th class="p-3"><%= totals.overallAmt %></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="row border-bottom">
+                            <div class="col-md-6 border-end">
+                                <p class="m-2">Invoice Amount in words</p>
+                                <p class="m-2"><b><%= totals.words %> only</b></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="m-2"><b>Amounts:</b></p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-2">Sub Total:</p>
+                                    <p class="m-2"><%= totals.overallAmt %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 border-end">
+                                <p class="m-2">Description</p>
+                                <p class="m-2"><b>We Do not accept any types of returns or refunds as per company policy</b></p>
+                                <p class="m-2">Payment Mode</p>
+                                <p class="m-2">Cash</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-2"><b>Total:</b></p>
+                                    <p class="m-2"><%= totals.overallAmt %></p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-2">Received:</p>
+                                    <p class="m-2"><%= totals.overallAmt %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" style="margin-bottom: 0;">
+                            <thead>
+                                <% if(data1.state != "Tamil Nadu") { %>
+                                    <tr>
+                                        <th class="p-3 text-center" rowspan="2">HSN / SAC</th>
+                                        <th class="p-3 text-center" rowspan="2">Taxable Amount</th>
+                                        <th class="p-3 text-center" colspan="2">IGST</th>
+                                        <th class="p-3 text-center" rowspan="2">Total Tax Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="p-3 text-center">Rate</th>
+                                        <th class="p-3 text-center">Amount</th>
+                                    </tr>
+                                <% } else { %>
+                                    <tr>
+                                        <th class="p-3 text-center" rowspan="2">HSN / SAC</th>
+                                        <th class="p-3 text-center" rowspan="2">Taxable Amount</th>
+                                        <th class="p-3 text-center" colspan="2">CGST</th>
+                                        <th class="p-3 text-center" colspan="2">SGST</th>
+                                        <th class="p-3 text-center" rowspan="2">Total Tax Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="p-3 text-center">Rate</th>
+                                        <th class="p-3 text-center">Amount</th>
+                                        <th class="p-3 text-center">Rate</th>
+                                        <th class="p-3 text-center">Amount</th>
+                                    </tr>
+                                <% } %>
+                            </thead>
+                            <tbody>
+                                <% data2.forEach(dataa => { %>
+                                    <% if(data1.state != "Tamil Nadu") { %>
+                                        <tr>
+                                            <td class="p-3"></td>
+                                            <td class="p-3"><%= dataa.price %></td>
+                                            <td class="p-3"><%= data.igst %> %</td>
+                                            <td class="p-3"><%= dataa.gstcost %></td>
+                                            <td class="p-3"><%= dataa.gstcost %></td>
+                                        </tr>
+                                    <% } else { %>
+                                        <tr>
+                                            <td class="p-3"><%= dataa.hsn %></td>
+                                            <td class="p-3"><%= dataa.price %></td>
+                                            <td class="p-3"><%= data.cgst %> %</td>
+                                            <td class="p-3"><%= dataa.cgstCost %></td>
+                                            <td class="p-3"><%= data.sgst %> %</td>
+                                            <td class="p-3"><%= dataa.sgstCost %></td>
+                                            <td class="p-3"><%= dataa.gstcost %></td>
+                                        </tr>
+                                    <% } %>
+                                <% }) %>
+                            </tbody>
+                            <tfoot>
+                                <% if(data1.state != "Tamil Nadu") { %>
+                                    <tr>
+                                        <th class="p-3">Total</th>
+                                        <th class="p-3"></th>
+                                        <th class="p-3"></th>
+                                        <th class="p-3"><%= totals.overallGst %></th>
+                                        <th class="p-3"></th>
+                                        <th class="p-3"><%= totals.overallGst %></th>
+                                    </tr>
+                                <% } else { %>
+                                    <tr>
+                                        <th class="p-3">Total</th>
+                                        <th class="p-3"></th>
+                                        <th class="p-3"></th>
+                                        <th class="p-3"><%= totals.overAllCgst %></th>
+                                        <th class="p-3"></th>
+                                        <th class="p-3"><%= totals.overAllSgst %></th>
+                                        <th class="p-3"><%= totals.overallGst %></th>
+                                    </tr>
+                                <% } %>
+                            </tfoot>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-6 border-end pt-5">
+                                <p class="m-2"><b>Terms and Conditions</b></p>
+                                <p class="m-2">we do not accept any return of products unless it's physically damaged during transportation</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="m-2 text-center" style="padding-bottom: 70px;">For, <%= data.companyName %></p>
+                                <p class="m-2 text-center">Authorized Signatory</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
