@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "632d737e284e4839e2c16b9e"
+  },
+  "address": "52, Midland Street vedarpuliyankulam, madurai - 625 006",
+  "phone": 7539974609,
+  "email": "grainguides@gmail.com",
+  "gstin": "33AX0PH6882L1ZT",
+  "stateGstCode": "33-Tamil Nadu",
+  "companyName": "Mahadi epoxy furnitures and home decors",
+  "cgst": "9",
+  "igst": "18",
+  "sgst": "9"
+}]
