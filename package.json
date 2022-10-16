@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "pm2 start index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "mongoose": "^6.6.0",
     "nodemon": "^2.0.19",
     "number-to-words": "^1.2.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pm2": "^5.2.2"
   }
 }
