@@ -1,0 +1,50 @@
+<%- include('template.ejs') -%>
+<div class="container mt-3">
+    <table id="table" style="width: 100%; border-color: #ced4da;" class="table-hover table-bordered">
+        <thead>
+            <tr>
+                <th class="p-3">Invoice No</th>
+                <th class="p-3">Customer Name</th>
+                <th class="p-3">Address</th>
+                <th class="p-3">Phone</th>
+                <th class="p-3">View Bill</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i = 0; i < list.length; i++) { %>
+                <tr>
+                    <td class="p-3"><%= list[i].invoiceNo %></td>
+                    <td class="p-3"><%= list[i].customerName %></td>
+                    <td class="p-3"><%= list[i].customerAddress %></td>
+                    <td class="p-3"><%= list[i].contactNo %></td>
+                    <td class="p-3"><a href="list/<%= list[i]._id %>"><button class="btn btn-info">View Bill</button></a></td>
+                </tr>
+            <% } %>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="p-3">Invoice No</th>
+                <th class="p-3">Customer Name</th>
+                <th class="p-3">Address</th>
+                <th class="p-3">Phone</th>
+                <th class="p-3">View Bill</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+</body>
+<script src="datatables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="datatables/DataTables-1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="datatables/Responsive-2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="datatables/Responsive-2.3.0/js/responsive.bootstrap5.js"></script>
+<script src="datatables/Buttons-2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.bootstrap5.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.html5.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.print.min.js"></script>
+<script src="datatables/Buttons-2.2.3/js/buttons.colVis.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable();
+    })
+</script>
+</html>

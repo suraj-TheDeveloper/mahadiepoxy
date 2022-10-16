@@ -26,6 +26,25 @@ exports.showProduct = (req, res) => {
     });
 }
 
+exports.showOne = (req, res) => {
+    ProductModel.findById(req.params.id, (err, result) => {
+        res.render("updateproduct.ejs", {data: result});
+    });
+}
+
+exports.updateProduct = (req, res) => {
+    ProductModel.findByIdAndUpdate(req.body.id, {
+        name: req.body.pname,
+        price: req.body.price,
+        unit: req.body.unit,
+        stock: req.body.stock,
+        hsn: req.body.hsn
+    }, (err, result) => {
+        if(err) throw err;
+        res.redirect("/products");
+    })
+}
+
 exports.cart = async (req, res) => {
     // console.log(req.body);
     const cart = await cartModel.find();
@@ -95,7 +114,7 @@ exports.invoice = async (req, res) => {
         let itemcostt = [];
         result1.product.map(item => {
             // console.log(item);
-            costs.push(item.price);
+            costs.push(Number(item.price));
             let itemcost = item.price * item.quantity;;
             let gstpercent = parseFloat(result.igst) / 100;
             let gstamount = gstpercent * itemcost;
@@ -132,11 +151,12 @@ exports.invoice = async (req, res) => {
         for(l = 0; l < costs.length; l++) {
             sum3 += costs[l];
         }
+        console.log(sum3);
         total = {
             overallGst: sum.toFixed(2),
             overallAmt: sum1.toFixed(2),
             itemTotal: sum2,
-            itemcost: sum3,
+            itemcost: sum3.toFixed(2),
             words: numberwords.toWords(sum1)
         }
         // console.log(datas);
@@ -200,7 +220,7 @@ exports.invoice = async (req, res) => {
             overallGst: sum.toFixed(2),
             overallAmt: sum1.toFixed(2),
             itemTotal: sum2,
-            // itemcost: sum5,
+            // itemcost: sum5.toFixed(2),
             words: numberwords.toWords(sum1),
             overAllCgst: sum3.toFixed(2),
             overAllSgst: sum4.toFixed(2)
@@ -208,6 +228,147 @@ exports.invoice = async (req, res) => {
         // console.log(datas);      
     }
     res.render("billing.ejs", {data: result, data1: result1, data2: datas, totals: total, invoice: result1.invoiceNo, date: moment(result1.date).format("DD-MM-YYYY")});
+}
+
+exports.listHistory = async (req, res) => {
+    let history = await historyModel.find().exec();
+    res.render("list.ejs", {list: history});
+}
+
+exports.invoiceHistory = async (req, res) => {
+    const itemnumber = await ProductModel.findOne().sort({_id: -1}).exec();
+    // console.log(itemnumber);
+    const result = await profileModel.findOne().exec();
+    const result1 = await historyModel.findById(req.params.id);
+    // console.log(result1);
+    let datas = [];
+    let gsttotal = [];
+    let grosstotal = [];
+    let total = {};
+    let items = [];
+    let sgstamount = [];
+    let cgstamount = [];
+    let costs = [];
+    // console.log(result1);
+    if(result1.state != "Tamil Nadu") {
+        // console.log(result1.product);
+        let itemcostt = [];
+        result1.product.map(item => {
+            // console.log(item);
+            costs.push(Number(item.price));
+            let itemcost = item.price * item.quantity;;
+            let gstpercent = parseFloat(result.igst) / 100;
+            let gstamount = gstpercent * itemcost;
+            let grossamount = (((parseFloat("100%") / 100) + gstpercent) * itemcost);
+            items.push(item.quantity);
+            grosstotal.push(grossamount);
+            gsttotal.push(gstamount);
+            datas.push({
+                productId: item.productId,
+                name: item.name,
+                price: item.price,
+                unit: item.unit,
+                hsn: item.hsn,
+                quantity: item.quantity,
+                // total: itemcost.toFixed(2),
+                total: grossamount.toFixed(2),
+                gstcost: gstamount.toFixed(2)
+            });
+        })      
+        // console.log(itemcostt);
+        let sum = 0;
+        let sum1 = 0;
+        let sum2 = 0;
+        let sum3 = 0;
+        for(i = 0; i < gsttotal.length; i++) {
+            sum += gsttotal[i];
+        } 
+        for(j = 0; j < grosstotal.length; j++) {
+            sum1 += grosstotal[j];
+        } 
+        for(k = 0; k < items.length; k++) {
+            sum2 += items[k]
+        }
+        for(l = 0; l < costs.length; l++) {
+            sum3 += costs[l];
+        }
+        console.log(sum3);
+        total = {
+            overallGst: sum.toFixed(2),
+            overallAmt: sum1.toFixed(2),
+            itemTotal: sum2,
+            itemcost: sum3.toFixed(2),
+            words: numberwords.toWords(sum1)
+        }
+        // console.log(datas);
+    } else {
+        result1.product.map(item => {
+            // console.log(item);
+            costs.push(item.price);
+            let itemcost = item.price * item.quantity;
+            let gstpercent = parseFloat(result.igst) / 100;
+            let sgstpercent = parseFloat(result.sgst) / 100;
+            let cgstpercent = parseFloat(result.cgst) / 100;
+            let gstamount = gstpercent * itemcost;
+            let cgstcost = cgstpercent * itemcost;
+            let sgstcost = sgstpercent * itemcost;
+            let grossamount = (((parseFloat("100%") / 100) + gstpercent) * itemcost);
+            cgstamount.push(cgstcost);
+            sgstamount.push(sgstcost);
+            items.push(item.quantity);
+            grosstotal.push(grossamount);
+            gsttotal.push(gstamount);
+            datas.push({
+                productId: item.productId,
+                name: item.name,
+                price: item.price,
+                unit: item.unit,
+                hsn: item.hsn,
+                quantity: item.quantity,
+                // total: itemcost.toFixed(2),
+                total: grossamount.toFixed(2),
+                gstcost: gstamount.toFixed(2),
+                cgstCost: cgstcost.toFixed(2),
+                sgstCost: sgstcost.toFixed(2)
+            });
+        })      
+        let sum = 0;
+        let sum1 = 0;
+        let sum2 = 0;
+        let sum3 = 0;
+        let sum4 = 0;
+        let sum5 = 0;
+        for(i = 0; i < gsttotal.length; i++) {
+            sum += gsttotal[i];
+        } 
+        for(j = 0; j < grosstotal.length; j++) {
+            sum1 += grosstotal[j];
+        } 
+        for(k = 0; k < items.length; k++) {
+            sum2 += items[k]
+        }
+        for(l = 0; l < cgstamount.length; l++) {
+            sum3 += cgstamount[l];
+        }
+        for(m = 0; m < sgstamount.length; m++) {
+            sum4 += sgstamount[m];
+        }
+        // for(o = 0; o < costs.length; l++) {
+        //     sum5 += costs[o];
+        // }
+        // console.log(costs);
+        total = {
+            overallGst: sum.toFixed(2),
+            overallAmt: sum1.toFixed(2),
+            itemTotal: sum2,
+            // itemcost: sum5.toFixed(2),
+            words: numberwords.toWords(sum1),
+            overAllCgst: sum3.toFixed(2),
+            overAllSgst: sum4.toFixed(2)
+        }
+        // console.log(datas);      
+    }
+    res.render("history.ejs", {data: result, data1: result1, data2: datas, totals: total, invoice: result1.invoiceNo, date: moment(result1.date).format("DD-MM-YYYY")});
 }
 
 //backend

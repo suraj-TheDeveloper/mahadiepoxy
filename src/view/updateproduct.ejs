@@ -1,0 +1,40 @@
+<%- include('template.ejs') -%>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="rounded-3 p-5 mt-5 mb-5" style="background-color:#F3F3F3;">
+                <h1 class="text-center"></h1>
+                <form action="/products/update" method="post">
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-control" name="pname" id="pname" value="<%= data.name %>" placeholder="Enter Product name...">
+                        <input type="hidden" class="form-control" name="id" id="id" value="<%= data._id %>" placeholder="Enter Product name...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Product Price</label>
+                        <input type="text" class="form-control" name="price" id="price" value="<%= data.price %>" placeholder="Enter Product price...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Unit</label>
+                        <select id="unit" name="unit" class="form-control">
+                            <option>Select Option</option>
+                            <option value="<%= data.unit %>" selected><%= data.unit %></option>
+                            <option value="nos">Nos</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" name="stock" id="stock" value="<%= data.stock %>" placeholder="Enter Product stock...">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">HSN / SAC</label>
+                        <input type="number" class="form-control" name="hsn" id="hsn" value="<%= data.hsn %>" placeholder="Enter HSN / SAC...">
+                    </div>
+                    <button class="btn btn-info">Update</button>
+                </form>
+            </div>
+        </div>  
+    </div>
+</div>
+</body>
+</html>

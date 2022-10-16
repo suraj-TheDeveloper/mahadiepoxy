@@ -13,5 +13,9 @@ router.post("/settingsupdate", indexController.saveSettings);
 router.post("/addtocart", indexController.addToCart);
 router.post("/addtocart/customer", indexController.customerDetails);
 router.get("/invoice", indexController.invoice);
+router.get("/list", indexController.listHistory);
+router.get("/list/:id", indexController.invoiceHistory);
+router.get("/products/:id", indexController.showOne);
+router.post("/products/update", indexController.updateProduct);
 
 module.exports = router;
